@@ -300,27 +300,27 @@ const Dashboard = ({ initialTruck, onBack }) => {
               <div className="border border-[#E2E8F0] rounded-sm overflow-hidden bg-white mt-4">
                 {/* Header row */}
                 <div className="text-[9px] font-bold uppercase tracking-widest text-[#64748B] border-b border-[#E2E8F0] hidden sm:grid sm:grid-cols-[100px_1fr_1fr_1fr_80px] bg-[#F8FAFB]">
-                  <div className="px-[12px] py-[9px] text-left border-r border-[#E2E8F0]">Timestamp</div>
-                  <div className="px-[12px] py-[9px] text-right border-r border-[#E2E8F0]">Temp</div>
-                  <div className="px-[12px] py-[9px] text-right border-r border-[#E2E8F0]">Hum</div>
-                  <div className="px-[12px] py-[9px] text-right border-r border-[#E2E8F0]">MQ135</div>
+                  <div className="px-[12px] py-[9px] text-left">Timestamp</div>
+                  <div className="px-[12px] py-[9px] text-left">Temp</div>
+                  <div className="px-[12px] py-[9px] text-left">Hum</div>
+                  <div className="px-[12px] py-[9px] text-left">MQ135</div>
                   <div className="px-[12px] py-[9px] text-right">Status</div>
                 </div>
 
                 {/* Data rows */}
                 {[
-                  { time: '10:42:05', temp: '4.8 °C', hum: '74 %', gas: '28 ppm', status: 'OK' },
-                  { time: '10:41:05', temp: '4.9 °C', hum: '73 %', gas: '29 ppm', status: 'OK' },
-                  { time: '10:40:05', temp: '5.1 °C', hum: '75 %', gas: '30 ppm', status: 'WARN' },
-                  { time: '10:39:05', temp: '5.0 °C', hum: '75 %', gas: '31 ppm', status: 'OK' },
-                  { time: '10:38:05', temp: '4.8 °C', hum: '76 %', gas: '30 ppm', status: 'OK' },
-                  { time: '10:37:05', temp: '4.7 °C', hum: '76 %', gas: '29 ppm', status: 'OK' },
+                  { time: '10:42:05', temp: '4.8°C', hum: '74%', gas: '28 ppm', status: 'OK' },
+                  { time: '10:41:05', temp: '4.9°C', hum: '73%', gas: '29 ppm', status: 'OK' },
+                  { time: '10:40:05', temp: '5.1°C', hum: '75%', gas: '30 ppm', status: 'WARN' },
+                  { time: '10:39:05', temp: '5.0°C', hum: '75%', gas: '31 ppm', status: 'OK' },
+                  { time: '10:38:05', temp: '4.8°C', hum: '76%', gas: '30 ppm', status: 'OK' },
+                  { time: '10:37:05', temp: '4.7°C', hum: '76%', gas: '29 ppm', status: 'OK' },
                 ].map((log, i) => (
                   <div key={i} className={`grid grid-cols-4 sm:grid-cols-[100px_1fr_1fr_1fr_80px] border-b border-[#E2E8F0] last:border-b-0 hover:bg-[#F8FAFB] transition-colors items-center ${log.status === 'WARN' ? 'bg-amber-50/50' : 'bg-white'}`}>
-                    <div className="px-[12px] py-[9px] font-mono text-[10px] sm:text-[11px] font-bold text-[#1295AE] col-span-4 sm:col-span-1 border-b sm:border-b-0 sm:border-r border-[#E2E8F0] text-left shrink-0">{log.time}</div>
-                    <div className="px-[12px] py-[9px] font-mono font-bold text-[11px] sm:text-[13px] text-[#1a1a1a] text-right sm:border-r border-[#E2E8F0] truncate">{log.temp}</div>
-                    <div className="px-[12px] py-[9px] font-mono font-bold text-[11px] sm:text-[13px] text-[#1a1a1a] text-right sm:border-r border-[#E2E8F0] truncate">{log.hum}</div>
-                    <div className="px-[12px] py-[9px] font-mono font-bold text-[11px] sm:text-[13px] text-[#1a1a1a] text-right sm:border-r border-[#E2E8F0] truncate">{log.gas}</div>
+                    <div className="px-[12px] py-[9px] font-mono text-[10px] sm:text-[11px] font-bold text-[#1295AE] col-span-4 sm:col-span-1 border-b sm:border-b-0 text-left shrink-0">{log.time}</div>
+                    <div className="px-[12px] py-[9px] font-mono font-bold text-[11px] sm:text-[13px] text-[#1a1a1a] text-left truncate">{log.temp}</div>
+                    <div className="px-[12px] py-[9px] font-mono font-bold text-[11px] sm:text-[13px] text-[#1a1a1a] text-left truncate">{log.hum}</div>
+                    <div className="px-[12px] py-[9px] font-mono font-bold text-[11px] sm:text-[13px] text-[#1a1a1a] text-left truncate">{log.gas}</div>
                     <div className="px-[12px] py-[9px] text-right shrink-0">
                        <span className={`text-[9.5px] uppercase tracking-wider font-bold ${log.status === 'OK' ? 'text-emerald-500' : 'text-amber-500'}`}>
                          {log.status}
