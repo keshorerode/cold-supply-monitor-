@@ -1,0 +1,40 @@
+{
+  "trucks": [
+    {
+      "id": 1,
+      "reg": "TN 45 D 2345",
+      "driver": "Arjun Kumar",
+      "load": "Apples",
+      "eta": "2h 15m",
+      "sensors": {
+        "temp": 4,
+        "humidity": 70,
+        "gas": 45
+      }
+    },
+    {
+      "id": 2,
+      "reg": "TN 28 B 9901",
+      "driver": "S Rajesh",
+      "load": "Mixed Fruit",
+      "eta": "45m",
+      "sensors": {
+        "temp": 8,
+        "humidity": 65,
+        "gas": 80
+      }
+    },
+    {
+      "id": 3,
+      "reg": "TN 30 C 1234",
+      "driver": "M Selvam",
+      "load": "Vegetables",
+      "eta": "4h 30m",
+      "sensors": {
+        "temp": 5,
+        "humidity": 75,
+        "gas": 30
+      }
+    }
+  ]
+}
