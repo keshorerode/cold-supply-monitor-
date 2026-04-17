@@ -83,8 +83,19 @@ const FleetMonitor = ({ onSelectTruck }) => {
 
   useEffect(() => {
     fetch('/api/trucks')
-      .then(res => res.json())
-      .then(data => setTrucks(data));
+      .then(res => {
+         if (!res.ok) throw new Error('API missing');
+         return res.json();
+      })
+      .then(data => setTrucks(data))
+      .catch(err => {
+         console.info("Using local fallback data for Vercel deployment.");
+         setTrucks([
+            { id: 1, reg: 'TN 45 D 2345', driver: 'Arjun Kumar', load: 'Apples', eta: '2h 15m', sensors: { temp: 4, humidity: 70, gas: 45 } },
+            { id: 2, reg: 'TN 28 B 9901', driver: 'S Rajesh', load: 'Mixed Fruit', eta: '45m', sensors: { temp: 8, humidity: 65, gas: 80 } },
+            { id: 3, reg: 'TN 30 C 1234', driver: 'M Selvam', load: 'Vegetables', eta: '4h 30m', sensors: { temp: 5, humidity: 75, gas: 30 } }
+         ]);
+      });
   }, []);
 
   return (
@@ -150,7 +161,7 @@ const Dashboard = ({ initialTruck, onBack }) => {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ id: truck.id, sensors })
-        });
+        }).catch(err => console.log("API Sync skipped on static hosting."));
     }, 1000);
     return () => clearTimeout(timer);
   }, [sensors]);
@@ -286,36 +297,32 @@ const Dashboard = ({ initialTruck, onBack }) => {
                 </div>
               </div>
               
-              <div className="space-y-3">
+              <div className="border border-[#E2E8F0] rounded-sm overflow-hidden bg-white mt-4">
                 {/* Header row */}
-                <div className="flex items-center justify-between px-3 pb-2 text-[9px] font-bold uppercase tracking-widest text-[#64748B] border-b border-[#E2E8F0] hidden sm:flex">
-                  <div className="w-20">Timestamp</div>
-                  <div className="flex gap-4 flex-1 justify-center">
-                    <span className="w-16 text-right">Temp</span>
-                    <span className="w-16 text-right">Hum</span>
-                    <span className="w-16 text-right">MQ135</span>
-                  </div>
-                  <div className="w-16 text-right">Status</div>
+                <div className="text-[9px] font-bold uppercase tracking-widest text-[#64748B] border-b border-[#E2E8F0] hidden sm:grid sm:grid-cols-[100px_1fr_1fr_1fr_80px] bg-[#F8FAFB]">
+                  <div className="px-[12px] py-[9px] text-left border-r border-[#E2E8F0]">Timestamp</div>
+                  <div className="px-[12px] py-[9px] text-right border-r border-[#E2E8F0]">Temp</div>
+                  <div className="px-[12px] py-[9px] text-right border-r border-[#E2E8F0]">Hum</div>
+                  <div className="px-[12px] py-[9px] text-right border-r border-[#E2E8F0]">MQ135</div>
+                  <div className="px-[12px] py-[9px] text-right">Status</div>
                 </div>
 
                 {/* Data rows */}
                 {[
-                  { time: '10:42:05', temp: '4.8°C', hum: '74%', gas: '28ppm', status: 'OK' },
-                  { time: '10:41:05', temp: '4.9°C', hum: '73%', gas: '29ppm', status: 'OK' },
-                  { time: '10:40:05', temp: '5.1°C', hum: '75%', gas: '30ppm', status: 'WARN' },
-                  { time: '10:39:05', temp: '5.0°C', hum: '75%', gas: '31ppm', status: 'OK' },
-                  { time: '10:38:05', temp: '4.8°C', hum: '76%', gas: '30ppm', status: 'OK' },
-                  { time: '10:37:05', temp: '4.7°C', hum: '76%', gas: '29ppm', status: 'OK' },
+                  { time: '10:42:05', temp: '4.8 °C', hum: '74 %', gas: '28 ppm', status: 'OK' },
+                  { time: '10:41:05', temp: '4.9 °C', hum: '73 %', gas: '29 ppm', status: 'OK' },
+                  { time: '10:40:05', temp: '5.1 °C', hum: '75 %', gas: '30 ppm', status: 'WARN' },
+                  { time: '10:39:05', temp: '5.0 °C', hum: '75 %', gas: '31 ppm', status: 'OK' },
+                  { time: '10:38:05', temp: '4.8 °C', hum: '76 %', gas: '30 ppm', status: 'OK' },
+                  { time: '10:37:05', temp: '4.7 °C', hum: '76 %', gas: '29 ppm', status: 'OK' },
                 ].map((log, i) => (
-                  <div key={i} className="flex flex-row items-center justify-between p-3 bg-[#F8FAFB] border border-[#E2E8F0] hover:border-[#1295AE]/30 transition-colors">
-                    <div className="font-mono text-[10px] sm:text-xs font-bold text-dim w-16 sm:w-20">{log.time}</div>
-                    <div className="flex gap-2 sm:gap-4 flex-1 justify-center font-bold text-[11px] sm:text-[13px]">
-                       <span className="text-[#1a1a1a] w-12 sm:w-16 text-right">{log.temp}</span>
-                       <span className="text-[#1a1a1a] w-12 sm:w-16 text-right">{log.hum}</span>
-                       <span className="text-[#1a1a1a] w-12 sm:w-16 text-right">{log.gas}</span>
-                    </div>
-                    <div className="w-14 sm:w-16 text-right shrink-0">
-                       <span className={`text-[8px] sm:text-[9px] uppercase tracking-wider font-bold px-1.5 py-1 ${log.status === 'OK' ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : 'bg-amber-50 text-amber-600 border border-amber-100'}`}>
+                  <div key={i} className={`grid grid-cols-4 sm:grid-cols-[100px_1fr_1fr_1fr_80px] border-b border-[#E2E8F0] last:border-b-0 hover:bg-[#F8FAFB] transition-colors items-center ${log.status === 'WARN' ? 'bg-amber-50/50' : 'bg-white'}`}>
+                    <div className="px-[12px] py-[9px] font-mono text-[10px] sm:text-[11px] font-bold text-[#1295AE] col-span-4 sm:col-span-1 border-b sm:border-b-0 sm:border-r border-[#E2E8F0] text-left shrink-0">{log.time}</div>
+                    <div className="px-[12px] py-[9px] font-mono font-bold text-[11px] sm:text-[13px] text-[#1a1a1a] text-right sm:border-r border-[#E2E8F0] truncate">{log.temp}</div>
+                    <div className="px-[12px] py-[9px] font-mono font-bold text-[11px] sm:text-[13px] text-[#1a1a1a] text-right sm:border-r border-[#E2E8F0] truncate">{log.hum}</div>
+                    <div className="px-[12px] py-[9px] font-mono font-bold text-[11px] sm:text-[13px] text-[#1a1a1a] text-right sm:border-r border-[#E2E8F0] truncate">{log.gas}</div>
+                    <div className="px-[12px] py-[9px] text-right shrink-0">
+                       <span className={`text-[9.5px] uppercase tracking-wider font-bold ${log.status === 'OK' ? 'text-emerald-500' : 'text-amber-500'}`}>
                          {log.status}
                        </span>
                     </div>
