@@ -283,51 +283,59 @@ const Dashboard = ({ initialTruck, onBack }) => {
               animate={{ opacity: 1, scale: 1 }}
               className="glass-card bg-white p-6 md:p-8 shadow-xl"
             >
-              <div className="flex items-center justify-between mb-6 border-b border-[#E2E8F0] pb-4">
-                <div>
-                  <h3 className="text-xl font-bold uppercase tracking-tight text-[#1a1a1a]">Telemetry Log View</h3>
-                  <p className="text-xs text-dim mt-1">Live raw data stream</p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="flex h-2.5 w-2.5 relative">
-                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                     <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-                  </span>
-                  <span className="text-[10px] font-bold text-emerald-600 uppercase tracking-widest">Streaming</span>
-                </div>
-              </div>
-              
-              <div className="border border-[#E2E8F0] rounded-sm overflow-hidden bg-white mt-4">
-                {/* Header row */}
-                <div className="text-[9px] font-bold uppercase tracking-widest text-[#64748B] border-b border-[#E2E8F0] hidden sm:grid sm:grid-cols-[100px_1fr_1fr_1fr_80px] bg-[#F8FAFB]">
-                  <div className="px-[12px] py-[9px] text-left">Timestamp</div>
-                  <div className="px-[12px] py-[9px] text-left">Temp</div>
-                  <div className="px-[12px] py-[9px] text-left">Hum</div>
-                  <div className="px-[12px] py-[9px] text-left">MQ135</div>
-                  <div className="px-[12px] py-[9px] text-right">Status</div>
+              <div className="bg-[#1e1e1e] rounded shadow-2xl overflow-hidden mt-4">
+                {/* Header Section */}
+                <div className="flex items-center justify-between p-6 border-b border-[#333333]">
+                  <div>
+                    <h3 className="text-xl font-bold uppercase tracking-tight text-white mb-1">Telemetry Log View</h3>
+                    <p className="text-xs text-[#9ca3af]">Live raw data stream</p>
+                  </div>
+                  <div className="text-[11px] font-bold text-[#9ca3af] uppercase tracking-widest">
+                    Streaming
+                  </div>
                 </div>
 
-                {/* Data rows */}
-                {[
-                  { time: '10:42:05', temp: '4.8°C', hum: '74%', gas: '28 ppm', status: 'OK' },
-                  { time: '10:41:05', temp: '4.9°C', hum: '73%', gas: '29 ppm', status: 'OK' },
-                  { time: '10:40:05', temp: '5.1°C', hum: '75%', gas: '30 ppm', status: 'WARN' },
-                  { time: '10:39:05', temp: '5.0°C', hum: '75%', gas: '31 ppm', status: 'OK' },
-                  { time: '10:38:05', temp: '4.8°C', hum: '76%', gas: '30 ppm', status: 'OK' },
-                  { time: '10:37:05', temp: '4.7°C', hum: '76%', gas: '29 ppm', status: 'OK' },
-                ].map((log, i) => (
-                  <div key={i} className={`grid grid-cols-4 sm:grid-cols-[100px_1fr_1fr_1fr_80px] border-b border-[#E2E8F0] last:border-b-0 hover:bg-[#F8FAFB] transition-colors items-center ${log.status === 'WARN' ? 'bg-amber-50/50' : 'bg-white'}`}>
-                    <div className="px-[12px] py-[9px] font-mono text-[10px] sm:text-[11px] font-bold text-[#1295AE] col-span-4 sm:col-span-1 border-b sm:border-b-0 text-left shrink-0">{log.time}</div>
-                    <div className="px-[12px] py-[9px] font-mono font-bold text-[11px] sm:text-[13px] text-[#1a1a1a] text-left truncate">{log.temp}</div>
-                    <div className="px-[12px] py-[9px] font-mono font-bold text-[11px] sm:text-[13px] text-[#1a1a1a] text-left truncate">{log.hum}</div>
-                    <div className="px-[12px] py-[9px] font-mono font-bold text-[11px] sm:text-[13px] text-[#1a1a1a] text-left truncate">{log.gas}</div>
-                    <div className="px-[12px] py-[9px] text-right shrink-0">
-                       <span className={`text-[9.5px] uppercase tracking-wider font-bold ${log.status === 'OK' ? 'text-emerald-500' : 'text-amber-500'}`}>
-                         {log.status}
-                       </span>
-                    </div>
-                  </div>
-                ))}
+                {/* Table Section */}
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left border-collapse min-w-[600px]">
+                    <thead>
+                      <tr className="border-b border-[#333333] text-[10px] uppercase tracking-widest text-white">
+                        <th className="px-[12px] py-[9px] font-bold">Timestamp</th>
+                        <th className="px-[12px] py-[9px] font-bold">Temp</th>
+                        <th className="px-[12px] py-[9px] font-bold">Hum</th>
+                        <th className="px-[12px] py-[9px] font-bold">MQ135</th>
+                        <th className="px-[12px] py-[9px] font-bold text-right">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody className="text-[12px] sm:text-[13px]">
+                      {[
+                        { time: '10:42:05', temp: '4.8°C', hum: '74%', gas: '28 ppm', status: 'OK' },
+                        { time: '10:41:05', temp: '4.9°C', hum: '73%', gas: '29 ppm', status: 'OK' },
+                        { time: '10:40:05', temp: '5.1°C', hum: '75%', gas: '30 ppm', status: 'WARN' },
+                        { time: '10:39:05', temp: '5.0°C', hum: '75%', gas: '31 ppm', status: 'OK' },
+                        { time: '10:38:05', temp: '4.8°C', hum: '76%', gas: '30 ppm', status: 'OK' },
+                        { time: '10:37:05', temp: '4.7°C', hum: '76%', gas: '29 ppm', status: 'OK' },
+                      ].map((log, i) => (
+                        <tr 
+                          key={i} 
+                          className={`border-b border-[#333333] last:border-0 transition-colors ${
+                            log.status === 'WARN' ? 'bg-[#403000]' : 'bg-transparent'
+                          }`}
+                        >
+                          <td className="px-[12px] py-[9px] font-mono text-[#5B8CD4]">{log.time}</td>
+                          <td className="px-[12px] py-[9px] font-mono text-white">{log.temp}</td>
+                          <td className="px-[12px] py-[9px] font-mono text-white">{log.hum}</td>
+                          <td className="px-[12px] py-[9px] font-mono text-white">{log.gas}</td>
+                          <td className="px-[12px] py-[9px] font-bold text-right">
+                             <span className={log.status === 'OK' ? 'text-[#4ade80]' : 'text-[#fbbf24]'}>
+                               {log.status}
+                             </span>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </motion.div>
           )}
