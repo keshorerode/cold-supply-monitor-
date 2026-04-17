@@ -300,11 +300,11 @@ const Dashboard = ({ initialTruck, onBack }) => {
                   <table className="w-full text-center border-collapse min-w-[600px]">
                     <thead>
                       <tr className="border-b border-[#333333] text-[10px] uppercase tracking-widest text-white">
-                        <th className="px-[12px] py-[9px] font-bold">Timestamp</th>
-                        <th className="px-[12px] py-[9px] font-bold">Temp</th>
-                        <th className="px-[12px] py-[9px] font-bold">Hum</th>
-                        <th className="px-[12px] py-[9px] font-bold">MQ135</th>
-                        <th className="px-[12px] py-[9px] font-bold">Status</th>
+                        <th className="px-[20px] py-[10px] font-bold">Timestamp</th>
+                        <th className="px-[20px] py-[10px] font-bold">Temp</th>
+                        <th className="px-[20px] py-[10px] font-bold">Hum</th>
+                        <th className="px-[20px] py-[10px] font-bold">MQ135</th>
+                        <th className="px-[20px] py-[10px] font-bold">Status</th>
                       </tr>
                     </thead>
                     <tbody className="text-[12px] sm:text-[13px]">
@@ -322,11 +322,11 @@ const Dashboard = ({ initialTruck, onBack }) => {
                             log.status === 'WARN' ? 'bg-[#403000]' : 'bg-transparent'
                           }`}
                         >
-                          <td className="px-[12px] py-[9px] font-mono text-[#5B8CD4]">{log.time}</td>
-                          <td className="px-[12px] py-[9px] font-mono text-white">{log.temp}</td>
-                          <td className="px-[12px] py-[9px] font-mono text-white">{log.hum}</td>
-                          <td className="px-[12px] py-[9px] font-mono text-white">{log.gas}</td>
-                          <td className="px-[12px] py-[9px] font-bold">
+                          <td className="px-[20px] py-[10px] font-mono text-[#5B8CD4]">{log.time}</td>
+                          <td className="px-[20px] py-[10px] font-mono text-white">{log.temp}</td>
+                          <td className="px-[20px] py-[10px] font-mono text-white">{log.hum}</td>
+                          <td className="px-[20px] py-[10px] font-mono text-white">{log.gas}</td>
+                          <td className="px-[20px] py-[10px] font-bold">
                              <span className={log.status === 'OK' ? 'text-[#4ade80]' : 'text-[#fbbf24]'}>
                                {log.status}
                              </span>
